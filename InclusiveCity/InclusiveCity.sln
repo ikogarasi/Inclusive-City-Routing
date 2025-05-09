@@ -7,11 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InclusiveCity.API", "Inclus
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InclusiveCity.Application", "InclusiveCity.Application\InclusiveCity.Application.csproj", "{5C2870CB-3B68-441B-BAA7-FDE458058621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InclusiveCity.Domain", "InclusiveCity.Domain\InclusiveCity.Domain.csproj", "{767F4656-FE03-4133-9E89-D34AC6C560E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InclusiveCity.Domain", "InclusiveCity.Domain\InclusiveCity.Domain.csproj", "{767F4656-FE03-4133-9E89-D34AC6C560E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InclusiveCity.Infrastructure", "InclusiveCity.Infrastructure\InclusiveCity.Infrastructure.csproj", "{1872968F-D211-46FD-96B3-34F8A89D4703}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InclusiveCity.Infrastructure", "InclusiveCity.Infrastructure\InclusiveCity.Infrastructure.csproj", "{1872968F-D211-46FD-96B3-34F8A89D4703}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InclusiveCity.Persistence", "InclusiveCity.Persistence\InclusiveCity.Persistence.csproj", "{B41310FD-7272-453B-9BD1-2125C81563EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InclusiveCity.Persistence", "InclusiveCity.Persistence\InclusiveCity.Persistence.csproj", "{307F0DCB-CCD9-45D2-A6FF-3B6264851493}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InclusiveCity.Contracts", "InclusiveCity.Contracts\InclusiveCity.Contracts.csproj", "{7B5BEE59-CF9B-44FC-AFC0-0BD5A60C6E54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +37,14 @@ Global
 		{1872968F-D211-46FD-96B3-34F8A89D4703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1872968F-D211-46FD-96B3-34F8A89D4703}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1872968F-D211-46FD-96B3-34F8A89D4703}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B41310FD-7272-453B-9BD1-2125C81563EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B41310FD-7272-453B-9BD1-2125C81563EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B41310FD-7272-453B-9BD1-2125C81563EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B41310FD-7272-453B-9BD1-2125C81563EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{307F0DCB-CCD9-45D2-A6FF-3B6264851493}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{307F0DCB-CCD9-45D2-A6FF-3B6264851493}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{307F0DCB-CCD9-45D2-A6FF-3B6264851493}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{307F0DCB-CCD9-45D2-A6FF-3B6264851493}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B5BEE59-CF9B-44FC-AFC0-0BD5A60C6E54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B5BEE59-CF9B-44FC-AFC0-0BD5A60C6E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B5BEE59-CF9B-44FC-AFC0-0BD5A60C6E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B5BEE59-CF9B-44FC-AFC0-0BD5A60C6E54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
