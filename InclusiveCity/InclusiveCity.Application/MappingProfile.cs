@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using InclusiveCity.Application.Dto;
 using InclusiveCity.Application.Features.Commands.AddReview;
 using InclusiveCity.Application.Features.Queries.GetStructures;
 using InclusiveCity.Contracts.Dto;
@@ -13,9 +14,12 @@ namespace InclusiveCity.Application
         {
             CreateMap<OsmReview, ReviewDto>()
                 .ForMember(dest => dest.OsmType, opt => opt.MapFrom(src => (OsmType)src.OsmTypeId));
-
+            CreateMap<ReviewDto, OsmReview>()
+                .ForMember(dest => dest.OsmTypeId, opt => opt.MapFrom(src => (int)Enum.Parse(typeof(OsmType), src.OsmType)));
             CreateMap<AddReviewCommand, OsmReview>();
 
+            CreateMap<OverpassResponseDto, GetStructuresDto>();
+            CreateMap<OverpassElementDto, ElementDto>();
             CreateMap<GetStructuresQuery, OverpassRequestDto>();
         }
     }

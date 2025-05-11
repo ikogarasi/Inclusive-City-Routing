@@ -10,6 +10,8 @@ namespace InclusiveCity.Persistence.Data
 
         public DbSet<OsmReview> OsmReviews { get; set; }
 
+        public DbSet<OsmStructureImage> OsmStructureImages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

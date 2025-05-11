@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public int OsmId { get; set; }
+        public long OsmId { get; set; }
 
         public string OsmType { get; set; }
 

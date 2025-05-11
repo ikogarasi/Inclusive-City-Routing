@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\InclusiveCity.Azure.BlobStorage\InclusiveCity.Azure.BlobStorage.csproj" />
     <ProjectReference Include="..\InclusiveCity.Contracts\InclusiveCity.Contracts.csproj" />
     <ProjectReference Include="..\InclusiveCity.Infrastructure\InclusiveCity.Infrastructure.csproj" />
   </ItemGroup>

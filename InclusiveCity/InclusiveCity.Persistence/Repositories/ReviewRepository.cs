@@ -1,5 +1,5 @@
 ﻿using InclusiveCity.Domain.Entities;
-using InclusiveCity.Domain.Repositories;
+using InclusiveCity.Domain.Interfaces.Repositories;
 using InclusiveCity.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,17 +17,25 @@ namespace InclusiveCity.Persistence.Repositories
             return await _dbContext.OsmReviews.Where(i => i.CreatedBy == userId).ToListAsync();
         }
 
-        public async Task<IEnumerable<OsmReview>> GetReviewsByObjectId(int osmId)
+        public async Task<IEnumerable<OsmReview>> GetReviewsByObjectId(long osmId)
         {
             return await _dbContext.OsmReviews.Where(i => i.OsmId == osmId).ToListAsync();
         }
 
-        public async Task<double> GetAverageRateFromReviews(int osmId)
+        public async Task<double> GetAverageRateFromReviews(long osmId)
         {
             return await _dbContext.OsmReviews
                 .Where(i => i.OsmId == osmId)
                 .Select(i => i.Rate)
                 .AverageAsync();
+        }
+
+        public async Task<Dictionary<long, List<OsmReview>>> GetReviewsForStructuresRange(IEnumerable<long> ids)
+        {
+            return await _dbContext.OsmReviews
+                .Where(i => ids.Contains(i.OsmId))
+                .GroupBy(r => r.OsmId)
+                .ToDictionaryAsync(g => g.Key, g => g.ToList());
         }
 
         public async Task AddReview(OsmReview osmReview)

@@ -5,6 +5,6 @@ namespace InclusiveCity.Application.Features.Queries.GetObjectReviews
 {
     public class GetObjectReviewsQuery : IRequest<IEnumerable<ReviewDto>>
     {
-        public int OsmId { get; set; }
+        public long OsmId { get; set; }
     }
 }

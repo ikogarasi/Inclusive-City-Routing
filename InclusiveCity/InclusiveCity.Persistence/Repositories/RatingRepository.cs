@@ -1,5 +1,5 @@
 ﻿using InclusiveCity.Domain.Entities;
-using InclusiveCity.Domain.Repositories;
+using InclusiveCity.Domain.Interfaces.Repositories;
 using InclusiveCity.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,7 +7,7 @@ namespace InclusiveCity.Persistence.Repositories
 {
     public class RatingRepository(ApplicationDbContext _dbContext) : IRatingRepository
     {
-        public async Task<OsmRating> UpsertObjectRating(int osmId, double newAverageRating)
+        public async Task<OsmRating> UpsertObjectRating(long osmId, double newAverageRating)
         {
             var osmObjectRatingFromDb = await _dbContext.OsmRatings
                 .FirstOrDefaultAsync(i => i.OsmId == osmId);
@@ -32,9 +32,16 @@ namespace InclusiveCity.Persistence.Repositories
             return osmObjectRatingFromDb;
         }
 
-        public async Task<OsmRating?> GetObjectRating(int osmId)
+        public async Task<OsmRating?> GetObjectRating(long osmId)
         {
             return await _dbContext.OsmRatings.FirstOrDefaultAsync(i => i.OsmId == osmId);
+        }
+
+        public async Task<Dictionary<long, OsmRating>> GetRatingsRange(IEnumerable<long> ids)
+        {
+            return await _dbContext.OsmRatings
+                .Where(r => ids.Contains(r.OsmId))
+                .ToDictionaryAsync(r => r.OsmId);
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using InclusiveCity.Domain.Entities;
 
-namespace InclusiveCity.Domain.Repositories
+namespace InclusiveCity.Domain.Interfaces.Repositories
 {
     public interface IRatingRepository
     {
-        Task<OsmRating?> GetObjectRating(int osmId);
-        Task<OsmRating> UpsertObjectRating(int osmId, double newAverageRating);
+        Task<OsmRating?> GetObjectRating(long osmId);
+        Task<OsmRating> UpsertObjectRating(long osmId, double newAverageRating);
+        Task<Dictionary<long, OsmRating>> GetRatingsRange(IEnumerable<long> ids);
     }
 }

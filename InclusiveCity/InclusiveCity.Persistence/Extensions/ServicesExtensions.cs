@@ -1,4 +1,4 @@
-﻿using InclusiveCity.Domain.Repositories;
+﻿using InclusiveCity.Domain.Interfaces.Repositories;
 using InclusiveCity.Persistence.Data;
 using InclusiveCity.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +21,7 @@ namespace InclusiveCity.Persistence.Extensions
         {
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<IRatingRepository, RatingRepository>();
+            services.AddScoped<IStructureImageRepository, StructureImageRepository>();
         }
     }
 }

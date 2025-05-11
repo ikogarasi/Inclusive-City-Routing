@@ -8,7 +8,7 @@ namespace InclusiveCity.Domain.Entities
         [Key]
         public int Id { get; set; }
     
-        public int OsmId { get; set; }
+        public long OsmId { get; set; }
 
         public int OsmTypeId { get; set; }
 

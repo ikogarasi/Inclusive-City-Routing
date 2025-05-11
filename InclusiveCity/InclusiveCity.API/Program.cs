@@ -1,6 +1,7 @@
 using Asp.Versioning;
 using InclusiveCity.Infrastructure.Extensions;
 using InclusiveCity.Infrastructure.Extenstions;
+using InclusiveCity.Persistence.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +21,13 @@ builder.Services.AddApiVersioning(options =>
     options.SubstituteApiVersionInUrl = true;
 });
 
+var configuration = builder.Services.BuildServiceProvider().GetService<IConfiguration>();
+builder.Services.ConfigureDbContext(configuration);
 builder.Services.AddMediatr();
 builder.Services.AddInfrastractureServices();
+builder.Services.AddRepositories();
 builder.Services.AddAutoMapper();
+builder.Services.AddAzureBlobStorage();
 
 var app = builder.Build();
 

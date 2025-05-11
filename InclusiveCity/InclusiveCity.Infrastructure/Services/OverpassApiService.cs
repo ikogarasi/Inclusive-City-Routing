@@ -13,7 +13,7 @@ namespace InclusiveCity.Infrastructure.Services
 
             var url = _configuration.GetValue<string>("OverpassApi:GetObjects");
 
-            var processedUrl = url.Replace("<:amenity>", requestData.Amenity)
+            var processedUrl = url.Replace("<:amenity>", requestData.Amenity.ToLower())
                 .Replace("<:around>", requestData.Around.ToString())
                 .Replace("<:lat>", requestData.Latitude.ToString())
                 .Replace("<:lon>", requestData.Longitude.ToString())

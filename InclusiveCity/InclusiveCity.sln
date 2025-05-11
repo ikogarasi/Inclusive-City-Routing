@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InclusiveCity.Domain", "Inc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InclusiveCity.Infrastructure", "InclusiveCity.Infrastructure\InclusiveCity.Infrastructure.csproj", "{1872968F-D211-46FD-96B3-34F8A89D4703}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InclusiveCity.Persistence", "InclusiveCity.Persistence\InclusiveCity.Persistence.csproj", "{307F0DCB-CCD9-45D2-A6FF-3B6264851493}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InclusiveCity.Persistence", "InclusiveCity.Persistence\InclusiveCity.Persistence.csproj", "{307F0DCB-CCD9-45D2-A6FF-3B6264851493}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InclusiveCity.Contracts", "InclusiveCity.Contracts\InclusiveCity.Contracts.csproj", "{7B5BEE59-CF9B-44FC-AFC0-0BD5A60C6E54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InclusiveCity.Contracts", "InclusiveCity.Contracts\InclusiveCity.Contracts.csproj", "{7B5BEE59-CF9B-44FC-AFC0-0BD5A60C6E54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InclusiveCity.Azure.BlobStorage", "InclusiveCity.Azure.BlobStorage\InclusiveCity.Azure.BlobStorage.csproj", "{99460FD6-1214-4F5B-933D-7F1551E193A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{7B5BEE59-CF9B-44FC-AFC0-0BD5A60C6E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B5BEE59-CF9B-44FC-AFC0-0BD5A60C6E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B5BEE59-CF9B-44FC-AFC0-0BD5A60C6E54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99460FD6-1214-4F5B-933D-7F1551E193A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99460FD6-1214-4F5B-933D-7F1551E193A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99460FD6-1214-4F5B-933D-7F1551E193A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99460FD6-1214-4F5B-933D-7F1551E193A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

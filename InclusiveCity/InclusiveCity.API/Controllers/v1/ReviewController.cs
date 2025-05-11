@@ -11,7 +11,7 @@ namespace InclusiveCity.API.Controllers.v1
     public class ReviewController : ControllerApiBase
     {
         [HttpGet("osm/{osmId}")]
-        public async Task<ActionResult> GetObjectReviews(int osmId)
+        public async Task<ActionResult> GetObjectReviews(long osmId)
         {
             return Ok(await Mediator.Send(new GetObjectReviewsQuery
             {

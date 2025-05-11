@@ -1,4 +1,4 @@
-﻿using InclusiveCity.Domain.Repositories;
+﻿using InclusiveCity.Domain.Interfaces.Repositories;
 using MediatR;
 
 namespace InclusiveCity.Application.Features.Queries.DeleteReview
