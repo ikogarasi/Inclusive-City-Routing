@@ -9,8 +9,23 @@
 
   <ItemGroup>
     <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.11" />
+    <PackageReference Include="NSwag.Annotations" Version="14.2.0" />
+    <PackageReference Include="NSwag.AspNetCore" Version="14.2.0" />
+    <PackageReference Include="NSwag.CodeGeneration" Version="14.2.0" />
+    <PackageReference Include="NSwag.CodeGeneration.CSharp" Version="14.2.0" />
+    <PackageReference Include="NSwag.CodeGeneration.TypeScript" Version="14.2.0" />
+    <PackageReference Include="NSwag.MSBuild" Version="14.2.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
+
+  <Target Name="NSwag" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net80) run nswag.json">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+    </Exec>
+  </Target>
 
   <ItemGroup>
     <ProjectReference Include="..\InclusiveCity.Application\InclusiveCity.Application.csproj" />

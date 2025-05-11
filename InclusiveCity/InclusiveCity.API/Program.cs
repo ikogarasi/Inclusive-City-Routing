@@ -5,10 +5,19 @@ using InclusiveCity.Persistence.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(policy =>
+{
+    policy.AddPolicy("AllowAnyOrigins", _ =>
+    {
+        _.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddOpenApiDocument();
 
 builder.Services.AddApiVersioning(options =>
 {
@@ -31,12 +40,10 @@ builder.Services.AddAzureBlobStorage();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseOpenApi();
+app.UseSwaggerUi();
 
+app.UseCors("AllowAnyOrigins");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
