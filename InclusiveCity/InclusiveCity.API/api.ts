@@ -76,44 +76,6 @@ export class ReviewClient extends ApiBase {
         return Promise.resolve<ReviewDto[]>(null as any);
     }
 
-    getUsersReviews(userId: string): Promise<ReviewDto[]> {
-        let url_ = this.baseUrl + "/api/v1/Review/user/{userId}";
-        if (userId === undefined || userId === null)
-            throw new Error("The parameter 'userId' must be defined.");
-        url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.http.fetch(url_, transformedOptions_);
-        }).then((_response: Response) => {
-            return this.processGetUsersReviews(_response);
-        });
-    }
-
-    protected processGetUsersReviews(response: Response): Promise<ReviewDto[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as ReviewDto[];
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<ReviewDto[]>(null as any);
-    }
-
     addReview(command: AddReviewCommand): Promise<FileResponse> {
         let url_ = this.baseUrl + "/api/v1/Review";
         url_ = url_.replace(/[?&]$/, "");
@@ -277,7 +239,7 @@ export class StructureClient extends ApiBase {
         this.baseUrl = baseUrl ?? "";
     }
 
-    getStructures(latitude: number | undefined, longitude: number | undefined, around: number | undefined, amenity: string | undefined, isWheelChair: boolean | undefined, shouldRetrieveRating: boolean | undefined, shouldRetrieveReviews: boolean | undefined, shouldGetImages: boolean | undefined): Promise<GetStructuresDto> {
+    getStructures(latitude: number | undefined, longitude: number | undefined, around: number | undefined, amenity: string | null | undefined, name: string | null | undefined, isWheelChair: boolean | undefined, shouldRetrieveRating: boolean | undefined, shouldRetrieveReviews: boolean | undefined, shouldGetImages: boolean | undefined): Promise<GetStructuresDto> {
         let url_ = this.baseUrl + "/api/v1/Structure?";
         if (latitude === null)
             throw new Error("The parameter 'latitude' cannot be null.");
@@ -291,10 +253,10 @@ export class StructureClient extends ApiBase {
             throw new Error("The parameter 'around' cannot be null.");
         else if (around !== undefined)
             url_ += "Around=" + encodeURIComponent("" + around) + "&";
-        if (amenity === null)
-            throw new Error("The parameter 'amenity' cannot be null.");
-        else if (amenity !== undefined)
+        if (amenity !== undefined && amenity !== null)
             url_ += "Amenity=" + encodeURIComponent("" + amenity) + "&";
+        if (name !== undefined && name !== null)
+            url_ += "Name=" + encodeURIComponent("" + name) + "&";
         if (isWheelChair === null)
             throw new Error("The parameter 'isWheelChair' cannot be null.");
         else if (isWheelChair !== undefined)
@@ -342,6 +304,61 @@ export class StructureClient extends ApiBase {
             });
         }
         return Promise.resolve<GetStructuresDto>(null as any);
+    }
+
+    getStructureById(osmId: number | undefined, type: string | undefined, shouldRetrieveRating: boolean | undefined, shouldRetrieveReviews: boolean | undefined, shouldGetImages: boolean | undefined): Promise<ElementDto> {
+        let url_ = this.baseUrl + "/api/v1/Structure/structure-by-id?";
+        if (osmId === null)
+            throw new Error("The parameter 'osmId' cannot be null.");
+        else if (osmId !== undefined)
+            url_ += "OsmId=" + encodeURIComponent("" + osmId) + "&";
+        if (type === null)
+            throw new Error("The parameter 'type' cannot be null.");
+        else if (type !== undefined)
+            url_ += "Type=" + encodeURIComponent("" + type) + "&";
+        if (shouldRetrieveRating === null)
+            throw new Error("The parameter 'shouldRetrieveRating' cannot be null.");
+        else if (shouldRetrieveRating !== undefined)
+            url_ += "ShouldRetrieveRating=" + encodeURIComponent("" + shouldRetrieveRating) + "&";
+        if (shouldRetrieveReviews === null)
+            throw new Error("The parameter 'shouldRetrieveReviews' cannot be null.");
+        else if (shouldRetrieveReviews !== undefined)
+            url_ += "ShouldRetrieveReviews=" + encodeURIComponent("" + shouldRetrieveReviews) + "&";
+        if (shouldGetImages === null)
+            throw new Error("The parameter 'shouldGetImages' cannot be null.");
+        else if (shouldGetImages !== undefined)
+            url_ += "ShouldGetImages=" + encodeURIComponent("" + shouldGetImages) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processGetStructureById(_response);
+        });
+    }
+
+    protected processGetStructureById(response: Response): Promise<ElementDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as ElementDto;
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ElementDto>(null as any);
     }
 
     uploadImages(command: UploadStructureImagesCommand): Promise<FileResponse> {

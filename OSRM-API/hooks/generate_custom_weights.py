@@ -12,9 +12,8 @@ DB_CONFIG = {
 output_file = "/data/custom_weights.lua"
 
 QUERY = """
-SELECT way_id, sp_get_inclusive_weights(way_id, surface_name) AS weight
+SELECT way_id, sp_get_inclusive_weights(way_id) AS weight
 FROM inclusive_weights
-LEFT JOIN surface_type ON TRUE
 """
 
 def generate_lua_weight_file():

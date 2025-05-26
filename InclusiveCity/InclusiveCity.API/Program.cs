@@ -17,7 +17,19 @@ builder.Services.AddCors(policy =>
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApiDocument();
+builder.Services.AddOpenApiDocument(options =>
+{
+    options.Title = "Inclusive City API";
+    options.Version = "v1";
+    options.Description = "API for Inclusive City project, providing access to structures and their details.";
+    options.DocumentName = "v1";
+    options.PostProcess = document =>
+    {
+        document.Info.Version = "v1.0";
+        document.Info.Title = "Inclusive City API";
+        document.Info.Description = "API for Inclusive City project, providing access to structures and their details.";
+    };
+});
 
 builder.Services.AddApiVersioning(options =>
 {

@@ -24,7 +24,7 @@ namespace InclusiveCity.Persistence.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<OsmStructureImage>> GetStructureImages(int osmId)
+        public async Task<IEnumerable<OsmStructureImage>> GetStructureImages(long osmId)
         {
             return await _dbContext.OsmStructureImages.Where(i => i.OsmId == osmId).ToListAsync();
         }

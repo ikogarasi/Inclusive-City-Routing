@@ -19,13 +19,14 @@ INSERT INTO surface_type (surface_name, surface_penalty) VALUES
 CREATE TABLE inclusive_weights (
   inclusive_weights_id SERIAL PRIMARY KEY,
   way_id BIGINT UNIQUE NOT NULL, -- OSM way ID for precise matching
+  surface_type_id INT REFERENCES surface_type(surface_type_id),
   wheelchair_accessible BOOLEAN DEFAULT TRUE, -- Whether the street is wheelchair accessible
   gradient DOUBLE PRECISION,
   curb_ramps BOOLEAN DEFAULT FALSE, -- Presence of curb ramps
   obstacle_penalty DOUBLE PRECISION DEFAULT 1.0 -- Penalty weight for obstacles (e.g., stairs, narrow paths)
 );
 
-CREATE OR REPLACE FUNCTION sp_get_inclusive_weights(way_id_input BIGINT, surface VARCHAR)
+CREATE OR REPLACE FUNCTION sp_get_inclusive_weights(way_id_input BIGINT)
 RETURNS DOUBLE PRECISION AS $$
 DECLARE
     weight DOUBLE PRECISION := 1.0;
@@ -54,7 +55,7 @@ BEGIN
 
     SELECT COALESCE(surface_penalty, 0.0) INTO surface_penalty
     FROM surface_type
-    WHERE surface_name = surface;
+    WHERE surface_type_id = iw.surface_type_id;
 
     weight := weight + surface_penalty;
 

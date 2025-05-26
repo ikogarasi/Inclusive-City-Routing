@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using InclusiveCity.Application.Dto;
 using InclusiveCity.Application.Features.Commands.UploadStructureImages;
+using InclusiveCity.Application.Features.Queries.GetStructureById;
 using InclusiveCity.Application.Features.Queries.GetStructures;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,12 @@ namespace InclusiveCity.API.Controllers.v1
     {
         [HttpGet]
         public async Task<ActionResult<GetStructuresDto>> GetStructures([FromQuery] GetStructuresQuery query)
+        {
+            return Ok(await Mediator.Send(query));
+        }
+
+        [HttpGet("structure-by-id")]
+        public async Task<ActionResult<ElementDto?>> GetStructureById([FromQuery] GetStructureByIdQuery query)
         {
             return Ok(await Mediator.Send(query));
         }

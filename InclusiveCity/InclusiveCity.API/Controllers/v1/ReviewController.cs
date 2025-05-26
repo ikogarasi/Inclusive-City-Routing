@@ -20,14 +20,14 @@ namespace InclusiveCity.API.Controllers.v1
             }));
         }
 
-        [HttpGet("user/{userId}")]
-        public async Task<ActionResult<IEnumerable<ReviewDto>>> GetUsersReviews(Guid userId)
-        {
-            return Ok(await Mediator.Send(new GetUsersReviewsQuery
-            {
-                UserId = userId
-            }));
-        }
+        //[HttpGet("user/{userId}")]
+        //public async Task<ActionResult<IEnumerable<ReviewDto>>> GetUsersReviews(Guid userId)
+        //{
+        //    return Ok(await Mediator.Send(new GetUsersReviewsQuery
+        //    {
+        //        UserId = userId
+        //    }));
+        //}
 
         [HttpPost]
         public async Task<ActionResult> AddReview([FromBody] AddReviewCommand command)
