@@ -7,5 +7,6 @@ namespace InclusiveCity.Domain.Interfaces.Services
     {
         Task<OverpassResponseDto> GetStructures(OverpassRequestDto requestData);
         Task<OverpassElementDto?> GetStructureById(long osmId, string type);
+        Task<OverpassResponseDto> GetInclusiveInfrastructure(InclusiveInfrastructureRequestDto requestData);
     }
 }

@@ -3,6 +3,7 @@ using InclusiveCity.Application.Dto;
 using InclusiveCity.Application.Features.Commands.UploadStructureImages;
 using InclusiveCity.Application.Features.Queries.GetStructureById;
 using InclusiveCity.Application.Features.Queries.GetStructures;
+using InclusiveCity.Application.Features.Queries.GetInclusiveInfrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InclusiveCity.API.Controllers.v1
@@ -27,6 +28,12 @@ namespace InclusiveCity.API.Controllers.v1
         {
             await Mediator.Send(command);
             return Ok();
+        }
+
+        [HttpGet("inclusive-infrastructure")]
+        public async Task<ActionResult<GetStructuresDto>> GetInclusiveInfrastructure([FromQuery] GetInclusiveInfrastructureQuery query)
+        {
+            return Ok(await Mediator.Send(query));
         }
     }
 }

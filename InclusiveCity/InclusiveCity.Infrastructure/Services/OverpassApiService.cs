@@ -1,10 +1,6 @@
 ﻿using InclusiveCity.Contracts.Dto;
-using InclusiveCity.Domain.Entities;
-using InclusiveCity.Domain.Enums;
 using InclusiveCity.Domain.Interfaces.Services;
 using Microsoft.Extensions.Configuration;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace InclusiveCity.Infrastructure.Services
 {
@@ -56,6 +52,64 @@ namespace InclusiveCity.Infrastructure.Services
             return null;
         }
 
+        public async Task<OverpassResponseDto> GetInclusiveInfrastructure(InclusiveInfrastructureRequestDto requestData)
+        {
+            var httpRequestMessage = new HttpRequestMessage();
+            var url = _configuration.GetValue<string>("OverpassApi");
+            
+            var processedUrl = BuildInclusiveInfrastructureQuery(url, requestData);
+
+            if (!Uri.TryCreate(processedUrl, UriKind.Absolute, out var uri))
+            {
+                throw new InvalidDataException();
+            }
+
+            httpRequestMessage.RequestUri = uri;
+            httpRequestMessage.Method = HttpMethod.Get;
+
+            return await SendAsync<OverpassResponseDto>(httpRequestMessage);
+        }
+
+        private string BuildInclusiveInfrastructureQuery(string baseUrl, InclusiveInfrastructureRequestDto requestDto)
+        {
+            var queryParts = new List<string>();
+            
+            if (requestDto.Toilets)
+            {
+                queryParts.Add($"node[amenity=toilets][wheelchair=yes](around:{requestDto.Around},{requestDto.Latitude},{requestDto.Longitude});");
+            }
+            
+            if (requestDto.BusStops)
+            {
+                queryParts.Add($"node[highway=bus_stop][wheelchair=yes](around:{requestDto.Around},{requestDto.Latitude},{requestDto.Longitude});");
+            }
+            
+            if (requestDto.Kerbs)
+            {
+                queryParts.Add($"node[kerb=flush](around:{requestDto.Around},{requestDto.Latitude},{requestDto.Longitude});");
+            }
+            
+            if (requestDto.TactilePaving)
+            {
+                queryParts.Add($"way[tactile_paving=yes](around:{requestDto.Around},{requestDto.Latitude},{requestDto.Longitude});");
+            }
+            
+            if (requestDto.Ramps)
+            {
+                queryParts.Add($"way[ramp=yes](around:{requestDto.Around},{requestDto.Latitude},{requestDto.Longitude});");
+            }
+            
+            // Ensure we have at least one query part
+            if (queryParts.Count == 0)
+            {
+                queryParts.Add($"node[wheelchair=yes](around:{requestDto.Around},{requestDto.Latitude},{requestDto.Longitude});");
+            }
+
+            string query = $"[out:json];({string.Join("", queryParts)});out geom;";
+
+            return baseUrl + query;
+        }
+
         private string BuildOverpassQuery(string baseUrl, OverpassRequestDto requestDto)
         {
             string conditions = BuildConditions(requestDto.Name, requestDto.Amenity, requestDto.IsWheelChair);
@@ -64,7 +118,7 @@ namespace InclusiveCity.Infrastructure.Services
             string wayFilter = $"way{conditions}(around:{requestDto.Around},{requestDto.Latitude},{requestDto.Longitude});";
             string relationFilter = $"relation{conditions}(around:{requestDto.Around},{requestDto.Latitude},{requestDto.Longitude});";
 
-            string query = $"[out:json];({nodeFilter}{wayFilter}{relationFilter});out center;";
+            string query = $"[out:json];({nodeFilter}{wayFilter}{relationFilter});out geom;";
 
             return baseUrl + query;
         }

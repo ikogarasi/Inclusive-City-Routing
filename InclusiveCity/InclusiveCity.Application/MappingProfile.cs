@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InclusiveCity.Application.Dto;
 using InclusiveCity.Application.Features.Commands.AddReview;
+using InclusiveCity.Application.Features.Queries.GetInclusiveInfrastructure;
 using InclusiveCity.Application.Features.Queries.GetStructures;
 using InclusiveCity.Contracts.Dto;
 using InclusiveCity.Domain.Entities;
@@ -21,6 +22,7 @@ namespace InclusiveCity.Application
             CreateMap<OverpassResponseDto, GetStructuresDto>();
             CreateMap<OverpassElementDto, ElementDto>();
             CreateMap<GetStructuresQuery, OverpassRequestDto>();
+            CreateMap<GetInclusiveInfrastructureQuery, InclusiveInfrastructureRequestDto>();
         }
     }
 }
