@@ -22,14 +22,37 @@ This project consists of three main components:
 
 ### 1. Starting the Backend (.NET API)
 
-1. Open the solution in Visual Studio:
+1. Configure your database connection string in `InclusiveCity.API/appsettings.json`:
+
+   ```json
+   "ConnectionStrings": {
+     "DefaultConnection": "Host=localhost;Username=postgres;Password=yourpassword;Database=InclusiveCity"
+   }
+   ```
+
+2. Configure Azure Blob Storage (if needed) in the same file:
+
+   ```json
+   "BlobConnectionString": "DefaultEndpointsProtocol=https;AccountName=youraccountname;AccountKey=youraccountkey;EndpointSuffix=core.windows.net",
+   "BlobReviewsImagesContainerName": "reviews",
+   "BlobStructureImagesContainerName": "structure"
+   ```
+
+3. Apply database migrations:
+
+   ```powershell
+   cd InclusiveCity
+   dotnet ef database update --project InclusiveCity.Persistence --startup-project InclusiveCity.API
+   ```
+
+4. Open the solution in Visual Studio:
 
    ```powershell
    cd InclusiveCity
    start InclusiveCity.sln
    ```
 
-2. Or build and run using the .NET CLI:
+5. Or build and run using the .NET CLI:
    ```powershell
    cd InclusiveCity
    dotnet build
@@ -118,6 +141,53 @@ Once the backend is running, you can access the Swagger documentation at:
 - The frontend and backend are designed to work together but can be developed independently.
 - The OSRM server requires significant resources for initial processing of map data.
 - Make sure all required ports (5000, 5133/7133, 5173, 5444) are available on your system.
+
+## Database Migrations
+
+To create a new migration after model changes:
+
+```powershell
+cd InclusiveCity
+dotnet ef migrations add MigrationName --project InclusiveCity.Persistence --startup-project InclusiveCity.API
+```
+
+To remove the last migration (if it hasn't been applied):
+
+```powershell
+dotnet ef migrations remove --project InclusiveCity.Persistence --startup-project InclusiveCity.API
+```
+
+## Configuration
+
+### Database Configuration
+
+The application uses PostgreSQL by default. You can change the connection string in `InclusiveCity.API/appsettings.json`:
+
+```json
+"ConnectionStrings": {
+  "DefaultConnection": "Host=localhost;Username=postgres;Password=yourpassword;Database=InclusiveCity"
+}
+```
+
+### Azure Blob Storage Configuration
+
+For storing images, the application uses Azure Blob Storage. Configure it in `InclusiveCity.API/appsettings.json`:
+
+```json
+"BlobConnectionString": "DefaultEndpointsProtocol=https;AccountName=youraccountname;AccountKey=youraccountkey;EndpointSuffix=core.windows.net",
+"BlobReviewsImagesContainerName": "reviews",
+"BlobStructureImagesContainerName": "structure"
+```
+
+### OSRM API Configuration
+
+The routing API URL can be configured in `InclusiveCity.API/appsettings.json`:
+
+```json
+"OsrmApi": {
+  "GetComputedRouteUrl": "http://localhost:5000/route/v1/walking/<:lon1>,<:lat1>;<:lon2>,<:lat2>?steps=true&geometries=polyline6"
+}
+```
 
 ## Troubleshooting
 
