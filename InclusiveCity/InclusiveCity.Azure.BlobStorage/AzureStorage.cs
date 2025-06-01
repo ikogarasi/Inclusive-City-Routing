@@ -15,9 +15,24 @@ namespace InclusiveCity.Azure.BlobStorage
 
         public AzureStorage(IConfiguration configuration)
         {
-            _storageConnectionString = configuration["BlobConnectionString"]!.ToString();
-            _storageStructureImagesContainerName = configuration["BlobStructureImagesContainerName"]!.ToString();
-            _storageReviewsImagesContainerName = configuration["BlobReviewsImagesContainerName"]!.ToString();
+            var storageConfiguration = configuration["BlobConnectionString"];
+            var structureImagesContainerNameConfiguration = configuration["BlobStructureImagesContainerName"];
+            var reviewsImagesContainerNameConfiguration = configuration["BlobReviewsImagesContainerName"];
+
+            if (storageConfiguration is not null)
+            {
+                _storageConnectionString = storageConfiguration.ToString();
+            }
+
+            if (structureImagesContainerNameConfiguration is not null)
+            {
+                _storageStructureImagesContainerName = structureImagesContainerNameConfiguration.ToString();
+            }
+
+            if (reviewsImagesContainerNameConfiguration is not null)
+            {
+                _storageReviewsImagesContainerName = reviewsImagesContainerNameConfiguration.ToString();
+            }
         }
 
         public async Task<BlobResponseDto> UploadAsync(byte[] blob, string fileName, ContainerType containerType)
@@ -26,17 +41,17 @@ namespace InclusiveCity.Azure.BlobStorage
 
             var response = new BlobResponseDto();
 
-            var storageContainer = _storageStructureImagesContainerName;
-
-            if (containerType == ContainerType.Review)
-            {
-                storageContainer = _storageReviewsImagesContainerName;
-            }
-
-            var container = new BlobContainerClient(_storageConnectionString, storageContainer);
-
             try
             {
+                var storageContainer = _storageStructureImagesContainerName;
+
+                if (containerType == ContainerType.Review)
+                {
+                    storageContainer = _storageReviewsImagesContainerName;
+                }
+
+                var container = new BlobContainerClient(_storageConnectionString, storageContainer);
+            
                 var newFileName = Guid.NewGuid() + Path.GetExtension(fileName);
 
                 var client = container.GetBlobClient(newFileName);

@@ -12,13 +12,13 @@ services:
       - osrm_network
     ports:
       - "5444:5432"
-    command: ["postgres", "-c", "password_encryption=md5"]
+    command: [ "postgres", "-c", "password_encryption=md5" ]
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./db-init:/docker-entrypoint-initdb.d
 
   osrm:
-    build: 
+    build:
       context: .
       dockerfile: images/osrm/Dockerfile
     container_name: osrm_routing

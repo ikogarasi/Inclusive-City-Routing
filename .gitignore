@@ -2,5 +2,6 @@
 bin/
 obj/
 .vs
-appsettings*.json
 osrm-data/
+OSRM-API2/
+node_modules
