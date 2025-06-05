@@ -70,9 +70,6 @@ export const ReviewPage = () => {
             >
               <b>{value.username}</b>
             </Typography>
-            <Typography sx={{ marginTop: 2 }}>
-              <i>{value.createdAt?.toDateString()}</i>
-            </Typography>
             <StarRating
               readonly={true}
               sizeText="30px"
